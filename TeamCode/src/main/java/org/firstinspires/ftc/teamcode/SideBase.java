@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode;
-
-import com.disnodeteam.dogecv.detectors.JewelDetector;
-
-import org.firstinspires.ftc.teamcode.Kinkaid_Stuff.v3.UltronRobot.RobotSubSystems.LiftSystem;
-import org.firstinspires.ftc.teamcode.Kinkaid_Stuff.v3.UltronRobot.RobotSubSystems.VuforiaSystem;
-import org.firstinspires.ftc.teamcode.Kinkaid_Stuff.v3.UltronUtil.SimpleColor;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.VuforiaSystem;
+import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 
 /**
  * Created by Julian on 2/2/2018.
  */
 
-public class SideBase extends UltronAuto {
+public class SideBase extends KarenAuto {
 
     public SideBase(SimpleColor alliance) {
         super(alliance);
@@ -20,59 +17,7 @@ public class SideBase extends UltronAuto {
     public void main() {
         VuforiaSystem.CryptoboxKey cryptoboxKey = identifyVuMark(3000);
         vuforiaSystem.stop();
-        dogeCVSystem.enable();
-        JewelDetector.JewelOrder jewelOrder = identifyJewelOrderVision(2000);
-        if (getRobot().ALLIANCE == SimpleColor.RED) {
-            redJewelKnock(jewelOrder);
-            redVuMarkPositioning(cryptoboxKey);
-        } else if (getRobot().ALLIANCE == SimpleColor.BLUE) {
-            blueJewelKnock(jewelOrder);
-            blueVuMarkPositioning(cryptoboxKey);
-        }
         placeCube();
-    }
-
-    private void redJewelKnock(JewelDetector.JewelOrder jewelOrderIn) {
-        switch (jewelOrderIn) {
-            case BLUE_RED:
-                driveBackwardsToGivenPosition(-0.5, -150);// go backwards
-                jewelArmSystem.rightUp();
-                waitFor(0.5);
-                driveForwardsToGivenPosition(0.5, 2150);
-                break;
-            case RED_BLUE:
-                driveForwardsToGivenPosition(0.5, 150);// go forwards
-                jewelArmSystem.rightUp();//raise arm
-                waitFor(0.5);
-                driveForwardsToGivenPosition(0.5, 1800);
-                break;
-            case UNKNOWN:
-                jewelArmSystem.rightUp();
-                waitFor(0.5);
-                driveForwardsToGivenPosition(0.5, 1900);
-                break;
-        }
-    }
-
-    private void blueJewelKnock(JewelDetector.JewelOrder jewelOrderIn) {
-        switch (jewelOrderIn) {
-            case BLUE_RED:
-                driveForwardsToGivenPosition(0.5, 150);// go forwards
-                jewelArmSystem.rightUp();//raise arm
-                waitFor(0.5);
-                driveForwardsToGivenPosition(0.5, 1800);
-                break;
-            case RED_BLUE:
-                driveBackwardsToGivenPosition(-0.5, -150);// go backwards
-                jewelArmSystem.rightUp();
-                waitFor(0.5);
-                driveForwardsToGivenPosition(0.5, 2150);
-                break;
-            case UNKNOWN:
-                jewelArmSystem.rightUp();
-                waitFor(0.5);
-                driveForwardsToGivenPosition(0.5, 1900);
-        }
     }
 
     private void redVuMarkPositioning(VuforiaSystem.CryptoboxKey cryptoboxKeyIn) {
