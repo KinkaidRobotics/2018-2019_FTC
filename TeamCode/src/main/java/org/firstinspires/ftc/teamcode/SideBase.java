@@ -49,7 +49,7 @@ public class SideBase extends KarenAuto {
         autoGoToLiftPos(LiftSystem.LiftState.HALF_CUBE_HEIGHT);
         waitFor(0.5);
         driveTime(1,1);//Full speed into the cryptobox in case we are not lined up
-        cubeSystem.openTop();
+        intakeSystem.openTop();
         driveBackwardsToGivenPosition(-0.5,-400);
         autoGoToLiftPos(LiftSystem.LiftState.ZERO_CUBE_HEIGHT);
         driveTime(1,1);

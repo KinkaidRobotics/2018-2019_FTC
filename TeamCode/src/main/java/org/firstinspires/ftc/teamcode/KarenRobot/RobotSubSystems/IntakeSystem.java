@@ -10,14 +10,14 @@ import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
  * Created by Julian on 11/16/2017.
  */
 
-public class CubeSystem extends SubSystem {
+public class IntakeSystem extends SubSystem {
 
     private Servo rightTopServo;
     private Servo leftTopServo;
     private Servo rightLowerServo;
     private Servo leftLowerServo;
 
-    public CubeSystem(Robot robot) {
+    public IntakeSystem(Robot robot) {
         super(robot);
     }
 

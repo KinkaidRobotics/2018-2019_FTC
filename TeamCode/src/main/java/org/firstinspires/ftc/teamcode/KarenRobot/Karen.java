@@ -3,11 +3,9 @@ package org.firstinspires.ftc.teamcode.KarenRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.KarenRobot.General.Robot;
-import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.CubeSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.IntakeSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.DriveSystem;
-import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.JewelArmSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
-import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.RelicSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.SensorSystem;
 import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 
@@ -32,7 +30,7 @@ public class Karen extends Robot {
     public static final int TWO_CUBE_HEIGHT = 0;
     public static final int THREE_CUBE_HEIGHT = 0;
 
-    //CubeSystem
+    //IntakeSystem
     public static final String RIGHT_TOP_SERVO_KEY = "RTS";//Servo Port 0
     public static final String LEFT_TOP_SERVO_KEY = "LTS";//Servo Port 1
 //    public static final String RIGHT_LOWER_SERVO_KEY = "RLS";
@@ -90,9 +88,6 @@ public class Karen extends Robot {
         putSubSystem("sensor", new SensorSystem(this));
         putSubSystem("drive", new DriveSystem(this));
         putSubSystem("lift", new LiftSystem(this));
-        putSubSystem("cube", new CubeSystem(this));
-        putSubSystem("jewelArm", new JewelArmSystem(this));
-        putSubSystem("relic", new RelicSystem(this));
-//        putSubSystem("jewelColor", new JewelColorSystem(this));
+        putSubSystem("intake", new IntakeSystem(this));
     }
 }

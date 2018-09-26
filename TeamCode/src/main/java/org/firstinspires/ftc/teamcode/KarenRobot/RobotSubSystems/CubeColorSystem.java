@@ -10,11 +10,11 @@ import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
  * Created by Julian on 2/2/2018.
  */
 
-public class JewelColorSystem extends SubSystem {
+public class CubeColorSystem extends SubSystem {
 
     private ColorSensor colorSensor;
 
-    public JewelColorSystem(Robot robot) {
+    public CubeColorSystem(Robot robot) {
         super(robot);
     }
 

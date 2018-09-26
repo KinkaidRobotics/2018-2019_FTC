@@ -16,10 +16,9 @@ import org.firstinspires.ftc.teamcode.KarenOpMode.AutonomousProgram;
 import org.firstinspires.ftc.teamcode.KarenRobot.General.Robot;
 import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
 import org.firstinspires.ftc.teamcode.KarenRobot.KarenAutoRobot;
-import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.CubeSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.IntakeSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.DriveSystem;
-import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.JewelArmSystem;
-import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.JewelColorSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.CubeColorSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.SensorSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.VuforiaSystem;
@@ -33,12 +32,10 @@ import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 public abstract class KarenAuto extends AutonomousProgram {
     public DriveSystem driveSystem;
     public LiftSystem liftSystem;
-    public CubeSystem cubeSystem;
-    public JewelArmSystem jewelArmSystem;
-    public JewelColorSystem jewelColorSystem;
+    public IntakeSystem intakeSystem;
+    public CubeColorSystem cubeColorSystem;
     public SensorSystem sensorSystem;
     public VuforiaSystem vuforiaSystem;
-//    public RelicSystem relicSystem;
 
     protected double currentYaw;
 
@@ -53,12 +50,10 @@ public abstract class KarenAuto extends AutonomousProgram {
         KarenAutoRobot karen = new KarenAutoRobot(this, alliance, false);
         driveSystem = (DriveSystem)karen.getSubSystem("drive");
         liftSystem = (LiftSystem)karen.getSubSystem("lift");
-        cubeSystem = (CubeSystem)karen.getSubSystem("cube");
-        jewelArmSystem = (JewelArmSystem)karen.getSubSystem("jewelArm");
+        intakeSystem = (IntakeSystem)karen.getSubSystem("intake");
         sensorSystem = (SensorSystem)karen.getSubSystem("sensor");
         vuforiaSystem = (VuforiaSystem)karen.getSubSystem("vuforia");
-//        relicSystem = (RelicSystem)karen.getSubSystem("relic");
-        jewelColorSystem = (JewelColorSystem)karen.getSubSystem("jewelColor");
+        cubeColorSystem = (CubeColorSystem)karen.getSubSystem("cubeColor");
         return karen;
     }
 
@@ -298,9 +293,9 @@ public abstract class KarenAuto extends AutonomousProgram {
         int sawRed = 0;
         int sawBlue = 0;
         while (opModeIsActive() && (System.currentTimeMillis() < (startTime + time))) {
-            if (jewelColorSystem.getRedColor() > jewelColorSystem.getBlueColor()) {
+            if (cubeColorSystem.getRedColor() > cubeColorSystem.getBlueColor()) {
                 sawRed++;
-            } else if (jewelColorSystem.getBlueColor() > jewelColorSystem.getRedColor()) {
+            } else if (cubeColorSystem.getBlueColor() > cubeColorSystem.getRedColor()) {
                 sawBlue++;
             }
         }
