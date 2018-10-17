@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 public class Karen extends Robot {
 
     //DriveSystem
-    public static final String DRIVE_RIGHT_KEY = "LD";//DC Port 0
+    public static final String DRIVE_RIGHT_KEY = "RD";//DC Port 0
     public static final String DRIVE_LEFT_KEY = "LD";//DC Port 1
     public static final double MIN_TURN_SPEED = 0.35;
 

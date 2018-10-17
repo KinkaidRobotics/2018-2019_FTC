@@ -14,3 +14,9 @@ buildscript {
 }
 
 
+
+allprojects {
+    repositories {
+        google()
+    }
+}

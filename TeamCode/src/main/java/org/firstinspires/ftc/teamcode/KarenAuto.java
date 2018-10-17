@@ -84,7 +84,7 @@ public abstract class KarenAuto extends AutonomousProgram {
         long initialTime = System.currentTimeMillis();
         long stopTime = Math.round(inTime*1000 + initialTime);
         while ((System.currentTimeMillis() < stopTime) && opModeIsActive()) {
-            driveSystem.setDrivePower(speed);
+            driveSystem.setPower(speed);
         }
     }
 

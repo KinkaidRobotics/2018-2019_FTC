@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems;
 import android.hardware.Sensor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.KarenRobot.General.Robot;
@@ -29,8 +30,13 @@ public class DriveSystem extends SubSystem {
         dcMotors[0] = hardwareMap().dcMotor.get(Karen.DRIVE_RIGHT_KEY);
         dcMotors[1] = hardwareMap().dcMotor.get(Karen.DRIVE_LEFT_KEY);
 
-        dcMotors[0].setDirection(DcMotor.Direction.REVERSE);
-        dcMotors[1].setDirection(DcMotor.Direction.FORWARD);
+        for (int i = 0; i < dcMotors.length; i++) {
+            if (i % 2 == 0) {
+                dcMotors[i].setDirection(DcMotorSimple.Direction.FORWARD);
+            } else {
+                dcMotors[i].setDirection(DcMotorSimple.Direction.REVERSE);
+            }
+        }
 
         resetEncoders();
         floatMode();
@@ -78,7 +84,7 @@ public class DriveSystem extends SubSystem {
      */
     public void displayPositions() {
         for (int i = 0; i < dcMotors.length; i++) {
-            telemetry().addData("Motor "+i, dcMotors[i].getCurrentPosition());
+            telemetry().addData("Motor "+ i + " ", dcMotors[i].getCurrentPosition());
         }
     }
 
@@ -87,7 +93,7 @@ public class DriveSystem extends SubSystem {
      */
     public void stopMotors() {
         brakeMode();
-        setDrivePower(0);
+        setPower(0);
     }
 
     /**
@@ -122,16 +128,6 @@ public class DriveSystem extends SubSystem {
     public void modeReset() {
         for (DcMotor motor : dcMotors) {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        }
-    }
-
-    /**
-     * setDrivePower drives directly forward at the given power
-     * @param power
-     */
-    public void setDrivePower(double power) {
-        for (DcMotor motor : dcMotors) {
-            motor.setPower(power);
         }
     }
 
