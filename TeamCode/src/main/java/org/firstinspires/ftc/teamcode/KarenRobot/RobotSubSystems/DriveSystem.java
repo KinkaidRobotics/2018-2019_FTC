@@ -49,7 +49,7 @@ public class DriveSystem extends SubSystem {
         } else {
             slow = false;
         }
-        setPower(-gamepad1().left_stick_y, -gamepad1().right_stick_y);     //ToDo: May need to reverse
+        setPower(-gamepad1().left_stick_y, -gamepad1().right_stick_y);
         if (gamepad1().left_stick_button) {
             resetEncoders();
         }
