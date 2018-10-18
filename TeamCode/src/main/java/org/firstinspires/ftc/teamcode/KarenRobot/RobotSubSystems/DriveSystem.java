@@ -18,6 +18,7 @@ public class DriveSystem extends SubSystem {
     private int NUM_MOTORS = 2;
     private DcMotor dcMotors[] = new DcMotor[NUM_MOTORS]; // right, left
     private boolean slow = false;
+    private boolean lastBumperVal = false;
 
     public DriveSystem(Robot robot) {
         super(robot);
@@ -44,16 +45,15 @@ public class DriveSystem extends SubSystem {
 
     @Override
     public void handle() {
-        if (gamepad1().right_bumper) {
-            slow = true;
-        } else {
-            slow = false;
+        if (gamepad1().right_bumper && !lastBumperVal) {
+            slow = !slow;
         }
         setPower(-gamepad1().left_stick_y, -gamepad1().right_stick_y);
         if (gamepad1().left_stick_button) {
             resetEncoders();
         }
         displayPositions();
+        lastBumperVal = gamepad1().right_bumper;
     }
 
     @Override
