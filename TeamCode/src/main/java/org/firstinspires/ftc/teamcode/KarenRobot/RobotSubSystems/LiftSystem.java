@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
  */
 
 public class LiftSystem extends SubSystem {
-    private int NUM_MOTORS = 2;
     private DcMotor liftMotor, releaseMotor;
     private boolean modeManual = false;
     private boolean wasA = false;
@@ -51,7 +50,6 @@ public class LiftSystem extends SubSystem {
     }
 
     @Override
-    // Look at this stuff
     public void handle() {
         // Change target lift state if needed
         if (gamepad1().dpad_up) {
@@ -176,7 +174,19 @@ public class LiftSystem extends SubSystem {
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftMotor.setTargetPosition(position);
         if (liftMotor.isBusy()) {
-            setPower(0.75);
+            setPower(1);
+        } else {
+            setPower(0);
+        }
+    }
+
+    public void goToTargetLiftPos(int position, double power) {
+        int currentPosition = liftMotor.getCurrentPosition();
+        int difference = currentPosition - position;
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftMotor.setTargetPosition(position);
+        if (liftMotor.isBusy()) {
+            setPower(power);
         } else {
             setPower(0);
         }
@@ -203,5 +213,17 @@ public class LiftSystem extends SubSystem {
         } else {
             releaseMotor.setPower(0);
         }
+    }
+
+    public void setLiftState(LiftState inLiftState) {
+        liftState = inLiftState;
+    }
+
+    public DcMotor getLiftMotor() {
+        return liftMotor;
+    }
+
+    public int getLiftPos() {
+        return liftMotor.getCurrentPosition();
     }
 }

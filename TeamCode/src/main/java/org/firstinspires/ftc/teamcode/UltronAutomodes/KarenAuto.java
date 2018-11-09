@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.UltronAutomodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
@@ -89,6 +89,31 @@ public abstract class KarenAuto extends AutonomousProgram {
         while ((System.currentTimeMillis() < stopTime) && opModeIsActive()) {
             driveSystem.setPower(speed);
         }
+    }
+
+    public void autoGoToLiftPos(LiftSystem.LiftState inLiftState, double power) {
+        int targetPos = 0;
+        int THRESHOLD = 100;
+
+        switch (inLiftState) {
+            case UP:
+                targetPos = Karen.UP_HEIGHT;
+                break;
+            case DOWN:
+                targetPos = Karen.DOWN_HEIGHT;
+                break;
+        }
+
+        liftSystem.getLiftMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (opModeIsActive() && liftSystem.getLiftMotor().isBusy()) {
+            liftSystem.goToTargetLiftPos(targetPos, power);
+        }
+        while (opModeIsActive() && Math.abs(liftSystem.getLiftPos() - targetPos) > THRESHOLD) {
+            liftSystem.goToTargetLiftPos(targetPos, power);
+        }
+
+        liftSystem.stop();
+
     }
 
 //    public VuforiaSystem.CryptoboxKey identifyVuMark(double time) {
