@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.KarenRobot.General.Robot;
 import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
 import org.firstinspires.ftc.teamcode.KarenRobot.KarenAutoRobot;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.DriveSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.VuforiaSystem;
 import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 
@@ -27,6 +28,7 @@ import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 
 public abstract class KarenAuto extends AutonomousProgram {
     public DriveSystem driveSystem;
+    public LiftSystem liftSystem;
     public VuforiaSystem vuforiaSystem;
 
     protected double currentYaw;
@@ -41,6 +43,7 @@ public abstract class KarenAuto extends AutonomousProgram {
     protected Robot buildRobot() {
         KarenAutoRobot karen = new KarenAutoRobot(this, alliance, false);
         driveSystem = (DriveSystem)karen.getSubSystem("drive");
+        liftSystem = (LiftSystem)karen.getSubSystem("lift");
         vuforiaSystem = (VuforiaSystem)karen.getSubSystem("vuforia");
         return karen;
     }

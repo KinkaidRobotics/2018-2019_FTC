@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.KarenRobot.General.SubSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
 
 /**
- * Created by Julian on 11/14/2017.
+ * Created by Julian on 11/9/2018
  */
 
 public class LiftSystem extends SubSystem {

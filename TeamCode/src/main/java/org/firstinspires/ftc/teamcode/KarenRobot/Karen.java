@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.KarenRobot.General.Robot;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.DriveSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
 import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 
 /**
@@ -34,5 +35,6 @@ public class Karen extends Robot {
         ALLIANCE = alliance;
         TWO_DRIVERS = twoDrivers;
         putSubSystem("drive", new DriveSystem(this));
+        putSubSystem("lift", new LiftSystem(this));
     }
 }
