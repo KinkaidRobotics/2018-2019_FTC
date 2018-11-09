@@ -23,6 +23,12 @@ public class Karen extends Robot {
     public static final String relicTemplate = "relicVuMarkTemplate";
     public static final String vuMarkAsset = "RelicVuMark";
 
+    //LiftSystem
+    public static final String LIFT_MOTOR_KEY = "LM";
+    public static final String RELEASE_MOTOR_KEY = "RM";
+    public static final int UP_HEIGHT = 1000;
+    public static final int DOWN_HEIGHT = 0;
+
     public Karen(OpMode opMode, SimpleColor alliance, Boolean twoDrivers) {
         super(opMode);
         ALLIANCE = alliance;

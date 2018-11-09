@@ -41,6 +41,7 @@ public class DriveSystem extends SubSystem {
 
         resetEncoders();
         floatMode();
+        modeVoltage();
     }
 
     @Override
@@ -81,7 +82,7 @@ public class DriveSystem extends SubSystem {
     }
 
     /**
-     * displayPositions will display the current encoder values
+     * displayPosition will display the current encoder values
      */
     public void displayPositions() {
         for (int i = 0; i < dcMotors.length; i++) {
