@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
  */
 
 public class DriveSystem extends SubSystem {
+    private SensorSystem sensorSystem;
     private int NUM_MOTORS = 2;
     private DcMotor dcMotors[] = new DcMotor[NUM_MOTORS]; // right, left
     private boolean slow = false;
@@ -26,7 +27,7 @@ public class DriveSystem extends SubSystem {
 
     @Override
     public void init() {
-        // this.sensorSystem = robot.getSubSystem(SensorSystem.class);
+         this.sensorSystem = robot.getSubSystem(SensorSystem.class);
 
         dcMotors[0] = hardwareMap().dcMotor.get(Karen.DRIVE_RIGHT_KEY);
         dcMotors[1] = hardwareMap().dcMotor.get(Karen.DRIVE_LEFT_KEY);
@@ -88,6 +89,7 @@ public class DriveSystem extends SubSystem {
         for (int i = 0; i < dcMotors.length; i++) {
             telemetry().addData("Motor "+ i + " ", dcMotors[i].getCurrentPosition());
         }
+        telemetry().addData("Slow Mode: ", slow);
     }
 
     /**
@@ -181,22 +183,22 @@ public class DriveSystem extends SubSystem {
         }
     }
 
-//    /**
-//     * turns a number of radians at a set power utilizing the gyro sensor
-//     * @param radians positive for right, negative for left, should range between -2pi and 2pi
-//     * @param power positive values and will be made positive if not, should rage between 0 and 1
-//     * @throws InterruptedException has a while statement that doesn't check if OpMode is active and could get mad
-//     */
-//    public void gyroTurn(double radians, double power) throws InterruptedException {
-//        power = Math.abs(power);
-//        double direction = Math.signum(radians);
-//        radians = radians%(Math.PI*2);
-//        double initialAngle = sensorSystem.getYaw();
-//        setPower(power, -power); //ToDo: Check direction of this, this could go in reverse
-//        while (Math.abs(initialAngle-sensorSystem.getYaw()) < Math.abs(radians)){sensorSystem.updateGyro();}
-//        stopMotors();
-//        resetEncoders();
-//    }
+    /**
+     * turns a number of radians at a set power utilizing the gyro sensor
+     * @param radians positive for right, negative for left, should range between -2pi and 2pi
+     * @param power positive values and will be made positive if not, should rage between 0 and 1
+     * @throws InterruptedException has a while statement that doesn't check if OpMode is active and could get mad
+     */
+    public void gyroTurn(double radians, double power) throws InterruptedException {
+        power = Math.abs(power);
+        double direction = Math.signum(radians);
+        radians = radians%(Math.PI*2);
+        double initialAngle = sensorSystem.getYaw();
+        setPower(power, -power); //ToDo: Check direction of this, this could go in reverse
+        while (Math.abs(initialAngle-sensorSystem.getYaw()) < Math.abs(radians)){sensorSystem.updateGyro();}
+        stopMotors();
+        resetEncoders();
+    }
 
     public int getRightEncoderValue() {
         int encoderPosition;

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.KarenRobot.General.Robot;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.DriveSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.SensorSystem;
 import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 
 /**
@@ -25,15 +26,19 @@ public class Karen extends Robot {
     public static final String vuMarkAsset = "RelicVuMark";
 
     //LiftSystem
-    public static final String LIFT_MOTOR_KEY = "LM";
-    public static final String RELEASE_MOTOR_KEY = "RM";
-    public static final int UP_HEIGHT = 1000;
+    public static final String LIFT_MOTOR_UP_KEY = "LMU";
+    public static final String LIFT_MOTOR_DOWN_KEY = "LMD";
+    public static final int UP_HEIGHT = 7400;
     public static final int DOWN_HEIGHT = 0;
+
+    //SensorSystem
+    public static final String IMU_KEY = "IMU";
 
     public Karen(OpMode opMode, SimpleColor alliance, Boolean twoDrivers) {
         super(opMode);
         ALLIANCE = alliance;
         TWO_DRIVERS = twoDrivers;
+        putSubSystem("sensor", new SensorSystem(this));
         putSubSystem("drive", new DriveSystem(this));
         putSubSystem("lift", new LiftSystem(this));
     }

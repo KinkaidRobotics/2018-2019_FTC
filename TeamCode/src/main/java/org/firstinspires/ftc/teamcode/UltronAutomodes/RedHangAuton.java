@@ -9,18 +9,15 @@ public class RedHangAuton extends KarenAutoRed {
 
     @Override
     public void main() {
-        liftSystem.pullPin();
 
         //Go to lift up position, lowering robot
         autoGoToLiftPos(LiftSystem.LiftState.UP, .25);
 
         // Unhook/move out of the way
-        driveTime(-.75, 1);
+        driveTime(-.75, .5);
 
         //After moving the robot lower the lift
         autoGoToLiftPos(LiftSystem.LiftState.DOWN,.75);
-
-
     }
 
 }

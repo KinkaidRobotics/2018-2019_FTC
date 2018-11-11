@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
  */
 
 public class LiftSystem extends SubSystem {
-    private DcMotor liftMotor, releaseMotor;
+    private DcMotor liftMotorUp, liftMotorDown;
     private boolean modeManual = false;
     private boolean wasA = false;
     private int pullTime = 500; // Time is in milliseconds
@@ -36,11 +36,11 @@ public class LiftSystem extends SubSystem {
     public void init() {
         // this.sensorSystem = robot.getSubSystem(SensorSystem.class);
 
-        liftMotor = hardwareMap().dcMotor.get(Karen.LIFT_MOTOR_KEY);
-        releaseMotor = hardwareMap().dcMotor.get(Karen.RELEASE_MOTOR_KEY);
+        liftMotorUp = hardwareMap().dcMotor.get(Karen.LIFT_MOTOR_UP_KEY);
+        liftMotorDown = hardwareMap().dcMotor.get(Karen.LIFT_MOTOR_DOWN_KEY);
 
-        liftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        releaseMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        liftMotorUp.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftMotorDown.setDirection(DcMotorSimple.Direction.FORWARD);
 
         liftState = LiftState.DOWN;
 
@@ -62,9 +62,6 @@ public class LiftSystem extends SubSystem {
         if (gamepad1().a && !wasA) {
             modeManual = !modeManual;
         }
-
-        // have the option to pull the pin/continue pulling the pin
-        pullPin();
 
         //move the lift to the desired location
         if (!modeManual) {
@@ -102,22 +99,25 @@ public class LiftSystem extends SubSystem {
      * floatMode will set motors to float when motor power is set to 0
      */
     public void floatMode() {
-        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        liftMotorUp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        liftMotorDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     /**
      * brakeMode will set motors to brake when motor power is set to 0
      */
     public void brakeMode() {
-        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotorUp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotorDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     /**
      * displayPosition will display the current encoder values
      */
     public void displayPosition() {
-        telemetry().addData("LiftMotor: ", liftMotor.getCurrentPosition());
-        telemetry().addData("ReleaseMotor: ", releaseMotor.getCurrentPosition());
+        telemetry().addData("LiftMotorUp: ", liftMotorUp.getCurrentPosition());
+        telemetry().addData("LiftMotorDown: ", liftMotorDown.getCurrentPosition());
+        telemetry().addData("Manual: ", modeManual);
     }
 
     /**
@@ -140,21 +140,24 @@ public class LiftSystem extends SubSystem {
      * modeVoltage sets all drive motors to RUN_WITHOUT_ENCODERs
      */
     public void modeVoltage() {
-        liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftMotorUp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftMotorDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /**
      * modeSpeed sets all drive motors to RUN_USING_ENCODERs
      */
     public void modeSpeed() {
-        liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftMotorUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftMotorDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /**
      * modeReset resets all drive encoder values
      */
     public void modeReset() {
-        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotorUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotorDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     /**
@@ -165,15 +168,18 @@ public class LiftSystem extends SubSystem {
      */
     public void setPower(double power) {
         power = Range.clip(power, -1,1);
-        liftMotor.setPower(power);
+        liftMotorUp.setPower(power);
+        liftMotorDown.setPower(power);
     }
 
     public void goToTargetLiftPos(int position) {
-        int currentPosition = liftMotor.getCurrentPosition();
+        int currentPosition = liftMotorUp.getCurrentPosition();
         int difference = currentPosition - position;
-        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftMotor.setTargetPosition(position);
-        if (liftMotor.isBusy()) {
+        liftMotorUp.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftMotorDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftMotorUp.setTargetPosition(position);
+        liftMotorDown.setTargetPosition(position);
+        if (liftMotorUp.isBusy() || liftMotorDown.isBusy()) {
             setPower(1);
         } else {
             setPower(0);
@@ -181,11 +187,13 @@ public class LiftSystem extends SubSystem {
     }
 
     public void goToTargetLiftPos(int position, double power) {
-        int currentPosition = liftMotor.getCurrentPosition();
+        int currentPosition = liftMotorUp.getCurrentPosition();
         int difference = currentPosition - position;
-        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        liftMotor.setTargetPosition(position);
-        if (liftMotor.isBusy()) {
+        liftMotorUp.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftMotorDown.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftMotorUp.setTargetPosition(position);
+        liftMotorDown.setTargetPosition(position);
+        if (liftMotorUp.isBusy() || liftMotorDown.isBusy()) {
             setPower(power);
         } else {
             setPower(0);
@@ -203,27 +211,19 @@ public class LiftSystem extends SubSystem {
         }
     }
 
-    public void pullPin() {
-        if (gamepad1().b && !wasB) {
-            stopTime = System.currentTimeMillis() + pullTime;
-        }
-
-        if (System.currentTimeMillis() < stopTime && pullingPin) {
-            releaseMotor.setPower(1);
-        } else {
-            releaseMotor.setPower(0);
-        }
-    }
-
     public void setLiftState(LiftState inLiftState) {
         liftState = inLiftState;
     }
 
-    public DcMotor getLiftMotor() {
-        return liftMotor;
+    public DcMotor getLiftMotorUp() {
+        return liftMotorUp;
+    }
+
+    public DcMotor getLiftMotorDown() {
+        return liftMotorDown;
     }
 
     public int getLiftPos() {
-        return liftMotor.getCurrentPosition();
+        return liftMotorUp.getCurrentPosition();
     }
 }

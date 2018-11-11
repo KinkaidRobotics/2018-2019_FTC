@@ -1,23 +1,16 @@
 package org.firstinspires.ftc.teamcode.UltronAutomodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.teamcode.KarenOpMode.AutonomousProgram;
 import org.firstinspires.ftc.teamcode.KarenRobot.General.Robot;
 import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
 import org.firstinspires.ftc.teamcode.KarenRobot.KarenAutoRobot;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.DriveSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
+import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.SensorSystem;
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.VuforiaSystem;
 import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
 
@@ -27,6 +20,7 @@ import org.firstinspires.ftc.teamcode.KarenUtil.SimpleColor;
  */
 
 public abstract class KarenAuto extends AutonomousProgram {
+    public SensorSystem sensorSystem;
     public DriveSystem driveSystem;
     public LiftSystem liftSystem;
     public VuforiaSystem vuforiaSystem;
@@ -42,6 +36,7 @@ public abstract class KarenAuto extends AutonomousProgram {
     @Override
     protected Robot buildRobot() {
         KarenAutoRobot karen = new KarenAutoRobot(this, alliance, false);
+        sensorSystem = (SensorSystem)karen.getSubSystem("sensor");
         driveSystem = (DriveSystem)karen.getSubSystem("drive");
         liftSystem = (LiftSystem)karen.getSubSystem("lift");
         vuforiaSystem = (VuforiaSystem)karen.getSubSystem("vuforia");
@@ -87,8 +82,11 @@ public abstract class KarenAuto extends AutonomousProgram {
         long initialTime = System.currentTimeMillis();
         long stopTime = Math.round(inTime*1000 + initialTime);
         while ((System.currentTimeMillis() < stopTime) && opModeIsActive()) {
+            telemetry.addData("Current Time: ", System.currentTimeMillis());
+            telemetry.addData("Stop Time: ", stopTime);
             driveSystem.setPower(speed);
         }
+        driveSystem.stop();
     }
 
     public void autoGoToLiftPos(LiftSystem.LiftState inLiftState, double power) {
@@ -104,8 +102,8 @@ public abstract class KarenAuto extends AutonomousProgram {
                 break;
         }
 
-        liftSystem.getLiftMotor().setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (opModeIsActive() && liftSystem.getLiftMotor().isBusy()) {
+        liftSystem.getLiftMotorUp().setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (opModeIsActive() && liftSystem.getLiftMotorUp().isBusy()) {
             liftSystem.goToTargetLiftPos(targetPos, power);
         }
         while (opModeIsActive() && Math.abs(liftSystem.getLiftPos() - targetPos) > THRESHOLD) {
