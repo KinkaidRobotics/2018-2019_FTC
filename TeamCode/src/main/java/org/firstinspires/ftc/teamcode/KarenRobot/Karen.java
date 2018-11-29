@@ -28,7 +28,7 @@ public class Karen extends Robot {
     //LiftSystem
     public static final String LIFT_MOTOR_UP_KEY = "LMU";
     public static final String LIFT_MOTOR_DOWN_KEY = "LMD";
-    public static final int UP_HEIGHT = 7400;
+    public static final int UP_HEIGHT = 7400; //Here
     public static final int DOWN_HEIGHT = 0;
 
     //SensorSystem
