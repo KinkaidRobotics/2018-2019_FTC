@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.KarenRobot.RobotSubSystems.LiftSystem;
 
-@Autonomous (name = "RedHangAuton")
-public class RedHangAuton extends KarenAutoRed {
+@Autonomous (name = "RedHangAutonNoRetract")
+public class RedHangAutonNoRetract extends KarenAutoRed {
 
     @Override
     public void main() {
@@ -15,7 +15,7 @@ public class RedHangAuton extends KarenAutoRed {
         autoGoToLiftPos(LiftSystem.LiftState.UP, 1);
         waitFor(1);
         driveTime(-.25, .5);
-        autoGoToLiftPos(LiftSystem.LiftState.DOWN, 1);
+//        autoGoToLiftPos(LiftSystem.LiftState.DOWN, 1);
 
 
 //        waitFor(1);

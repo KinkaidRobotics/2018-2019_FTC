@@ -40,6 +40,7 @@ public class SensorSystem extends SubSystem {
         imu.initialize(parameters);
 
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+        resetGyro();
     }
 
     @Override
@@ -56,7 +57,7 @@ public class SensorSystem extends SubSystem {
 
     public void updateGyro() {
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX.ZYX, AngleUnit.RADIANS);
-        yaw = (angles.firstAngle + conversionFactor);
+        yaw = (angles.firstAngle);
         roll = (angles.secondAngle + Math.PI*2)%(2*Math.PI);
         pitch = (angles.thirdAngle + Math.PI*2)%(2*Math.PI);
     }
@@ -73,6 +74,10 @@ public class SensorSystem extends SubSystem {
         return pitch;
     }
 
+    public double getConversionFactor() {
+        return conversionFactor;
+    }
+
     public void displayValues() {
         telemetry().addData("Yaw", yaw);
         telemetry().addData("Roll", roll);
@@ -82,5 +87,7 @@ public class SensorSystem extends SubSystem {
     public void resetGyro() {
         updateGyro();
         conversionFactor = getYaw();
+        telemetry().addData("Conversion Factor", conversionFactor);
+        telemetry().update();
     }
 }

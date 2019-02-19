@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.KarenRobot.Karen;
  */
 
 public class DriveSystem extends SubSystem {
+    //520 ticks on both is about 90 degrees
     private SensorSystem sensorSystem;
     private int NUM_MOTORS = 2;
     private DcMotor dcMotors[] = new DcMotor[NUM_MOTORS]; // right, left
@@ -118,6 +119,15 @@ public class DriveSystem extends SubSystem {
     }
 
     /**
+     * modePosition sets all drive motors to RUN_WITHOUT_ENCODERs
+     */
+    public void modePosition() {
+        for (DcMotor motor : dcMotors) {
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+    }
+
+    /**
      * modeSpeed sets all drive motors to RUN_USING_ENCODERs
      */
     public void modeSpeed() {
@@ -210,5 +220,9 @@ public class DriveSystem extends SubSystem {
         int encoderPosition;
         encoderPosition = dcMotors[1].getCurrentPosition();
         return encoderPosition;
+    }
+
+    public DcMotor[] getDcMotors() {
+        return dcMotors;
     }
 }

@@ -59,8 +59,12 @@ public class LiftSystem extends SubSystem {
         }
 
         // decide whether or not to use manual controls
-        if (gamepad1().a && !wasA) {
-            modeManual = !modeManual;
+        if (gamepad1().a) {
+            modeManual = true;
+        }
+
+        if (gamepad1().y) {
+            modeManual = false;
         }
 
         //move the lift to the desired location
@@ -84,10 +88,6 @@ public class LiftSystem extends SubSystem {
 
         //display the position
         displayPosition();
-
-        //update previous state variables
-        wasA = gamepad1().a;
-        wasB = gamepad1().b;
     }
 
     @Override

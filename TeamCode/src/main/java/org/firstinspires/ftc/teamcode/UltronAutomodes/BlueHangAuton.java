@@ -9,14 +9,24 @@ public class BlueHangAuton extends KarenAutoBlue {
 
     @Override
     public void main() {
-        //Go to lift up position, lowering robot
-        autoGoToLiftPos(LiftSystem.LiftState.UP, .25);
+        //turn test
+        sensorSystem.resetGyro();
+        autoTurnDegreesRight(90);
+        telemetry.addData("Turn Complete", true);
+        telemetry.update();
+        waitFor(3);
+        telemetry.addData("Waiting Complete", true);
+        telemetry.update();
+        autoTurnDegreesRight(-90);
 
-//        // Unhook/move out of the way
-//        driveTime(-.75, .5);
-//
-//        //After moving the robot lower the lift
-//        autoGoToLiftPos(LiftSystem.LiftState.DOWN,.75);
+
+        //----------------end test------------------------
+        // go down
+        // move a tiny bit
+        // lower the hook - need to get really good at this
+        // look at the objects
+        // depending on the position of the cube
+        // go knock out the yellow thing
+        // try to park
     }
-
 }
